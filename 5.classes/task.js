@@ -93,3 +93,41 @@ class Library {
 		}
 	}
 }
+
+//Задача 3 Журнал успеваемости *
+
+class Student {
+	constructor(name, gender, age) {
+		this.name = name;
+		this.gender = gender;
+		this.age = age;
+		this.marks = {};
+	}
+
+	addMark(mark, subject) {
+		if ((mark < 2) || (mark > 5)) {
+			return;
+		}
+		if (!(subject in this.marks)) {
+			this.marks[subject] = [];
+		}
+		this.marks[subject].push(mark);
+	}
+
+	getAverageBySubject(subject) {
+		if (!(subject in this.marks)) {
+			return 0;
+		}
+		let sum = this.marks[subject].reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+		return sum / this.marks[subject].length;
+	}
+
+	getAverage() {
+		const subjectArray = Object.keys(this.marks);
+		if (subjectArray.length === 0) {
+			return 0;
+		}
+		let sum = subjectArray.reduce((accumulator, currentValue) => accumulator + this.getAverageBySubject(currentValue), 0);
+		return sum / subjectArray.length;
+	}
+}
